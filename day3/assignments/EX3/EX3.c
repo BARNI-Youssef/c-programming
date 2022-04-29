@@ -11,7 +11,7 @@ person createpers(){
 
 void addpers(person P, list* L){
     if(L->Num == 8){
-        printf("Contact book full, do you want to remove the first entry ? (yes or no)");
+        printf("Contact book full, do you want to remove the first entry ? (yes or no) ");
         char ans[4];
         scanf("%s",ans);
         if(strcmp(ans, "yes") == 0){
