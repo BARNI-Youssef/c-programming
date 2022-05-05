@@ -67,8 +67,8 @@ char** strsplit(char* str, char delim){
         while(str[j] != delim && str[j] != '\0') j++;
         if(j != i){
             charcell* C;
-            C->following = NULL;
             C = (charcell*)malloc(sizeof(charcell));
+            C->following = NULL;
             C->X = (char*)malloc(sizeof(char)*(j-i+1));
             int e = 0;
             for(e = 0; e < j-i; e++) C->X[e] = str[e+i];          
@@ -94,11 +94,4 @@ char** strsplit(char* str, char delim){
         free(L);
     }
     return final;
-}
-
-int main(){
-    char** A = strsplit("..DSF.ZDFG.SDQSD", '.');
-    printf("%s ", A[0]);
-    printf("%s ", A[1]);
-    printf("%s ", A[2]);
 }

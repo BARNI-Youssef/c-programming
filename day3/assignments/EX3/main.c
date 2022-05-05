@@ -14,7 +14,7 @@ int main(){
         if(strcmp(cmd, "QUIT") == 0){
             printf("Goodbye !");
             destroy(&P);
-            exit(EXIT_FAILURE);
+            return 0;
         }
     }
 }
