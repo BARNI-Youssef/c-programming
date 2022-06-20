@@ -2,9 +2,8 @@
 
 int main(){
     map M = createMap(3);
-    M.head[2][0] = 1;
     showMap(M);
-    piece P = createPiece(2,1);
+    piece P = createPiece(1,1);
     fillPiece(&P);
     arrangeMap(P, &M);
     movePiece(L.head, &M);
@@ -12,7 +11,8 @@ int main(){
     piece R = createPiece(2,2);
     fillPiece(&R);
     arrangeMap(R,&M);
-    piece Q = createPiece(2,3);
+    showMap(M);
+    piece Q = createPiece(3,3);
     fillPiece(&Q);
     arrangeMap(Q,&M);
     showMap(M);

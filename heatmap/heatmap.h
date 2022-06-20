@@ -27,5 +27,5 @@ typedef struct piece piece;
 
 map createMap(unsigned);    
 void showMap(map);
-unsigned scanMap(heatmap); /*check if there's a sport in the heat map that haven't been fiiled yet*/
+int encercle(heatmap, map);
 heatmap makeheatmap(map);

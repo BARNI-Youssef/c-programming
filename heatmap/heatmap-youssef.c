@@ -1,7 +1,5 @@
 #include "heatmap.h"
 
-int max = 0;
-
 map createMap(unsigned size){
     map M = {size, (char**)malloc(sizeof(char*)*size)};
     for(int i = 0; i < size; i++) M.head[i] = (char*)malloc(sizeof(char)*size);
@@ -34,31 +32,24 @@ void showMap(map M){
 }
 
 void showHeatMap(heatmap M){
-    if(max > 9){
-        for(int i = 0; i < M.dim; i++){
-            printf("||");
-            for(int j = 0; j < M.dim; j++){
-                if(M.head[i][j] == 'A' || M.head[i][j] == 'B' || M.head[i][j] == '.') printf(" %c ", M.head[i][j]);
-                else{
-                    if(M.head[i][j] > 9) printf("%d ", M.head[i][j]);
-                    else printf(" %d ", M.head[i][j]);
-                }
-            }
-            printf("||\n");        
+    for(int i = 0; i < M.dim; i++){
+        printf("||");
+        for(int j = 0; j < M.dim; j++){
+            if(M.head[i][j] == 'A' || M.head[i][j] == 'B' || M.head[i][j] == '.') printf("%c ", M.head[i][j]);
+            else printf("%d ", M.head[i][j]);
         }
-        printf("\n");
+        printf("||\n");        
     }
-    else{
-        for(int i = 0; i < M.dim; i++){
-            printf("||");
-            for(int j = 0; j < M.dim; j++){
-                if(M.head[i][j] == 'A' || M.head[i][j] == 'B' || M.head[i][j] == '.') printf("%c ", M.head[i][j]);
-                else printf("%d ", M.head[i][j]);
-            }
-            printf("||\n");        
+    printf("\n");
+}
+
+unsigned scanMap(heatmap M){
+    for(int i = 0; i < M.dim; i++){
+        for(int j = 0; j < M.dim; j++){
+            if(M.head[i][j] == '.') return 1;
         }
-        printf("\n");
     }
+    return 0;
 }
 
 int encercle(heatmap T, map M){
@@ -80,17 +71,17 @@ int encercle(heatmap T, map M){
                             }
                             if(M.head[i][j+1] != 'A' && M.head[i][j+1] != 'B' && T.head[i][j+1] != 0){
                                 T.head[i][j+1] = 0;
-                                changes++;
+                                changes++;                             
                             }
                         }                        
                         if(j > 0){
                             if(M.head[i-1][j-1] != 'A' && M.head[i-1][j-1] != 'B' && T.head[i-1][j-1] != 0){
                                 T.head[i-1][j-1] = 0;
-                                changes++;
+                                changes++;                            
                             }
                             if(M.head[i][j-1] != 'A' && M.head[i][j-1] != 'B' && T.head[i][j-1] != 0){
                                 T.head[i][j-1] = 0;
-                                changes++;
+                                changes++;                                
                             }
                         }
                     }
@@ -102,13 +93,13 @@ int encercle(heatmap T, map M){
                         if(j < T.dim){
                             if(M.head[i+1][j+1] != 'A' && M.head[i+1][j+1] != 'B' && T.head[i+1][j+1] != 0){
                                 T.head[i+1][j+1] = 0;   
-                                changes++;
+                                changes++;                             
                             }
                         }
                         if(j > 0){
                             if(M.head[i+1][j-1] != 'A' && M.head[i+1][j-1] != 'B' && T.head[i+1][j-1] != 0){
                                 T.head[i+1][j-1] = 0;  
-                                changes++;
+                                changes++;                              
                             }
                         }
                     }
@@ -117,30 +108,29 @@ int encercle(heatmap T, map M){
                 else{
                     if(T.head[i][j] != '.'){
                         int next = T.head[i][j];
-                        if(max < next+1) max = next+1;
                         if(i > 0){
                             if(M.head[i-1][j] != 'A' && M.head[i-1][j] != 'B' && next+1 < T.head[i-1][j]){
-                                T.head[i-1][j] = next+1;
+                                M.head[i-1][j] = next+1;
                                 changes++;
                             }
                             if(j < T.dim-1){
-                                if(M.head[i-1][j+1] != 'A' && M.head[i-1][j+1] != 'B' && next+1 < T.head[i-1][j+1]){
+                                if(M.head[i-1][j+1] != 'A' && M.head[i-1][j+1] != 'B' && (next+1 < T.head[i-1][j+1])){
                                     T.head[i-1][j+1] = next+1;
                                     changes++;
                                 }
-                                if(M.head[i][j+1] != 'A' && M.head[i][j+1] != 'B' && next+1 < T.head[i][j+1]){
+                                if(M.head[i][j+1] != 'A' && M.head[i][j+1] != 'B' && (next+1 < T.head[i][j+1])){
                                     T.head[i][j+1] = next+1;
                                     changes++;
                                 }
                             }
                             if(j > 0){
-                                if(M.head[i-1][j-1] != 'A' && M.head[i-1][j-1] != 'B' && next+1 < T.head[i-1][j-1]){
+                                if(M.head[i-1][j-1] != 'A' && M.head[i-1][j-1] != 'B' && (next+1 < T.head[i-1][j-1])){
                                     T.head[i-1][j-1] = next+1; 
-                                    changes++;
+                                    changes++;                                   
                                 }
-                                if(M.head[i][j-1] != 'A' && M.head[i][j-1] != 'B' && next+1 < T.head[i][j-1]){
+                                if(M.head[i][j-1] != 'A' && M.head[i][j-1] != 'B' && (next+1 < T.head[i][j-1])){
                                     T.head[i][j-1] = next+1;  
-                                    changes++;
+                                    changes++;                                  
                                 }
                             }
                         }
@@ -150,13 +140,13 @@ int encercle(heatmap T, map M){
                                 changes++;
                             }
                             if(j < T.dim-1){
-                                if(M.head[i+1][j+1] != 'A' && M.head[i+1][j+1] != 'B' && next+1 < T.head[i+1][j+1]){
+                                if(M.head[i+1][j+1] != 'A' && M.head[i+1][j+1] != 'B' && (next+1 < T.head[i+1][j+1])){
                                     T.head[i+1][j+1] = next+1;
                                     changes++;
                                 }
                             }                        
                             if(j > 0){
-                                if(M.head[i+1][j-1] != 'A' && M.head[i+1][j-1] != 'B' && next+1 < T.head[i+1][j-1]){
+                                if(M.head[i+1][j-1] != 'A' && M.head[i+1][j-1] != 'B' && (next+1 < T.head[i+1][j-1])){
                                     T.head[i+1][j-1] = next+1;
                                     changes++;
                                 }
@@ -165,7 +155,11 @@ int encercle(heatmap T, map M){
                     }
                 }
             }
-        }
+            showHeatMap(T);
+            printf("(%d %d)\n", i, j);
+            usleep(20000);
+            system("clear");
+        } 
     }
     return changes;
 }
